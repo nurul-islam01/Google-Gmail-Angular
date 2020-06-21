@@ -1,0 +1,133 @@
+<div class="mail-table" id="content">
+    <div class="mail-header">
+      
+      <mat-checkbox (change)="$event ? masterToggle() : null"
+        [checked]="selection.hasValue() && isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()"
+        [aria-label]="checkboxLabel()" matTooltip="Select"  style=" margin-bottom: -3px; margin-right: 2px;">
+      </mat-checkbox>
+      <span style="cursor: pointer;" class="btn-light" matTooltip="Select" >
+        <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE5C5;</i>
+      </span>
+      
+      <span *ngIf="!selection.hasValue()" style="cursor: pointer; margin-left: 15px;"  matTooltip="Refresh"  class="mail-header-btn">
+        <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE5D5;</i>
+      </span>
+      
+      <span *ngIf="selection.hasValue()" style="cursor: pointer;" class="mail-header-btn" matTooltip="Archive" >
+        <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE149;</i>
+      </span>
+      
+      <span  *ngIf="selection.hasValue() "  style="cursor: pointer;" class="mail-header-btn" matTooltip="Report spam" >
+        <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE160;</i>
+      </span>
+      
+      <span *ngIf="selection.hasValue() "  style="cursor: pointer;" class="mail-header-btn" matTooltip="Delete" >
+        <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE872;</i>
+      </span>
+      
+      <div *ngIf="selection.hasValue()"  style="height: 25px; width: 1px; background-color: rgba(128, 128, 128, 0.233); margin-left: 15px; margin-right: 15px;"></div>
+
+      <span *ngIf="selection.hasValue()"  style="cursor: pointer;" class="mail-header-btn" matTooltip="Mark as read" >
+        <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE151;</i>
+      </span>
+      
+      <span *ngIf="selection.hasValue() "  style="cursor: pointer;" class="mail-header-btn" matTooltip="Snooze" >
+        <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE924;</i>
+      </span>
+      
+      <span *ngIf="selection.hasValue()"  style="cursor: pointer;" class="mail-header-btn" matTooltip="Add to task" >
+        <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE03B;</i>
+      </span>
+
+      <div *ngIf="selection.hasValue()"  style="height: 25px; width: 1px; background-color: rgba(128, 128, 128, 0.233); margin-left: 15px; margin-right: 15px;"></div>
+      
+      <span *ngIf="selection.hasValue()"  style="cursor: pointer;" class="mail-header-btn" matTooltip="Move to" >
+        <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE41E;</i>
+      </span>
+      
+      <span *ngIf="selection.hasValue()"  style="cursor: pointer;" class="mail-header-btn" matTooltip="Labels" >
+        <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE892;</i>
+      </span>
+      
+      <span style="cursor: pointer;" class="mail-header-btn" matTooltip="More" >
+        <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE5D4;</i>
+      </span>
+      
+
+
+    </div>
+    
+
+    <div class="mail-container mat-elevation-z8">
+
+      <table mat-table [dataSource]="dataSource">
+    
+        <ng-container matColumnDef="select" >
+          <th mat-header-cell *matHeaderCellDef>
+            <!-- <mat-checkbox (change)="$event ? masterToggle() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()"
+                          [aria-label]="checkboxLabel()">
+            </mat-checkbox> -->
+          </th>
+          <td mat-cell *matCellDef="let row; let i=index" style="width: 290px;">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)"
+                          [aria-label]="checkboxLabel(row, i)">
+            </mat-checkbox>
+            
+            <i class="material-icons star-icon">&#xE83A;</i>
+            <span (click)="detailsPage()"  class="mail-title">Linkedin kahfkahfkahfksh fkshfks hfkshf kshfkshfkhskfhskfshkfh</span>
+          </td>
+        </ng-container>
+      
+     
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element" class="mail-subtitle" style="cursor: pointer; display: flex; align-items: center; line-height: 50px; vertical-align: middle;"> 
+              <span (click)="detailsPage()" class="mail-subtitle" style="width: 100%;">{{element.name}}</span> 
+
+              <small class="mail-date">Jun 16</small>
+
+              <span style="cursor: pointer;" class="mail-btn" matTooltip="Archive" >
+                <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE149;</i>
+              </span>
+              <span style="cursor: pointer;" class="mail-btn" matTooltip="Delete" >
+                <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE872;</i>
+              </span>
+              <span style="cursor: pointer;" class="mail-btn" matTooltip="Mark as read" >
+                <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE151;</i>
+              </span>
+              
+              <span style="cursor: pointer;" class="mail-btn" matTooltip="Mark as unread" >
+                <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE159;</i>
+              </span>
+
+              <span style="cursor: pointer;" class="mail-btn" matTooltip="Snooze" [matMenuTriggerFor]="snooze">
+                <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE924;</i>
+              </span>
+              
+              <mat-menu #snooze="matMenu">
+                <button style="width: 100%; border: none; background-color: white; text-align: left; padding-bottom: 5px; padding-left: 15px; font-size: 14px;">Snooze until</button>
+                <button mat-menu-item>Later today </button>
+                <button mat-menu-item>Add star</button>
+                <button mat-menu-item>Creat event</button>
+                <button mat-menu-item>Filter messages like this</button>
+                <button mat-menu-item>Mute</button>
+      
+              </mat-menu>
+          </td>
+
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            >
+        </tr>
+      </table>
+    </div>
+  </div>

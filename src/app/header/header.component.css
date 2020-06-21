@@ -1,0 +1,256 @@
+
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+    transition: .3s;
+}
+
+.navbar {
+    padding: 10px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    font-size: 13px/27px Roboto, RobotoDraft, Arial, sans-serif !important;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: first baseline;
+    align-items: center;
+    min-width: 100%;
+    width: 100%;
+    max-height: 65px;
+    min-height: 65px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.24);
+}
+
+.nav-left {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 80%;
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+    padding: 12px;
+    align-content: center;
+    border-radius: 50%;
+    margin-left: 4px;
+    transition: .3s;
+}
+
+.navbar-btn.active.focus,
+.navbar-btn.active:focus,
+.navbar-btn.focus,
+.navbar-btn:active.focus,
+.navbar-btn:active:focus,
+.navbar-btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 30px 0;
+}
+
+.google-calender-image {
+    /* width: 40px; */
+    min-width: 40px;
+    height: 40px;
+    margin-left: 3px;
+    margin-right: 16px;
+}
+
+.nav-text {
+    color: #5f6368;
+    opacity: 1;
+    font-family: 'Product Sans', Arial, sans-serif;
+    font-size: 22px;
+    position: relative;
+    text-decoration: none;
+    padding-left: 7px;
+}
+
+.todaybtn {
+    margin: 0 12px 0 55px;
+    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .25px;
+    text-transform: none;
+    opacity: 1;
+    color: #3c4043;
+    line-height: 20px;
+    transition: .3s;
+}
+
+.todaybtn:hover {
+    background: #f5f5f5;
+}
+
+#left-arrow,
+#right-arrow,
+#searchbtn,
+#supportbtn,
+#settingsbtn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    transition: .3s;
+    color: #5f6368;
+    margin: 5px;
+}
+
+#settingsbtn {
+    margin-right: 30px;
+}
+
+#monthbtn {
+    margin-left: 15px;
+    margin-right: 20px;
+}
+
+.month-text {
+    color: #3c4043;
+    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 28px;
+    white-space: nowrap;
+    text-align: center;
+    margin: 0 12px 0 12px;
+    transition: .3s;
+}
+
+.nav-end {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: right;
+    line-height: -.5rem;
+    align-content: center;
+    width: 15%;
+    flex-wrap: nowrap;
+}
+
+
+/*Serach box*/
+
+.search-form {
+    outline: 0;
+    display: flex;
+    background: #f1f3f4;
+    -webkit-border-radius: 4px;
+    border-radius: 8px;
+    width: 47.5%;
+    margin-left: 65px;
+    margin-right: 20px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.search-form-active {
+    display: block;
+}
+
+.search-form>.textbox {
+    outline: 0;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 5px;
+    background: #f1f3f4;
+    /* background-color: rgba(255, 255, 255, 0.8); */
+    color: #212121;
+    border: 0;
+    float: left;
+    -webkit-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+    transition: .1s;
+    width: 100%;
+}
+
+.search-form>.textbox:focus {
+    outline: 0;
+    background-color: #FFF;
+}
+
+form:focus-within {
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    background: #fff;
+    transition: .1s;
+}
+
+/*Serach box*/
+
+.buttonwithborder {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 10px;
+    transition: .3s;
+    align-self: center;
+}
+
+#profilebtn {
+    background: white;
+    border-radius: 0%;
+    margin-right: 5px;
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+    width: 40px;
+    height: 40px;
+    padding: 5px 5px;
+    margin-left: 10px;
+    transition: .3s;
+}
+
+#profilebtn img {
+    height: 25px;
+    width: 25px;
+    background: transparent;
+}
+
+#left-arrow:hover,
+#right-arrow:hover,
+#settingsbtn:hover,
+#searchbtn:hover,
+#supportbtn:hover,
+#appsbtn:hover,
+#profilebtn:hover {
+    background: #f5f5f5;
+}
+
+
+/* ---------------------------------------------------
+    MENU BUTTON
+----------------------------------------------------- */
+
+.navbar-btn i {
+    text-align: center;
+    color: #5f6368;
+}
+
+.navbar-btn:hover {
+    background: rgb(240, 238, 238);
+}
+
+.navbar-active {
+    background: rgb(240, 238, 238);
+}

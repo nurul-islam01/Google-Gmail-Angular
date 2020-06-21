@@ -1,0 +1,85 @@
+<div >
+
+    <mat-card class="compose-card">
+
+        <div class="title">
+            <span style="font-size: 14px; color: white;">New Message</span>
+            <span>
+                <i class="material-icons title-icon ">&#xE15B;</i>
+                <i class="material-icons title-icon">&#xE56B;</i>
+                <i class="material-icons title-icon">&#xE5CD;</i>
+            </span>
+        </div>
+
+        <div class="compose-body">
+            <form class="compose-form" [formGroup]="composeForm">
+
+                <div class="form-input">
+                    <span style="width: 100%; display: block;" (click)="recipentClick()"  *ngIf="recipentVisibility">Recipent</span>
+                    <div style="width: 100%; display: flex; align-items: center;" *ngIf="!recipentVisibility">
+                        <span style="padding-right: 3px;">To</span>
+                        <input type="text"  (blur)="toFocusOut()" autofocus formControlName="to" style="width: 100%; outline: none; background: white; border: none;">
+                        <span class="ccbcc">Cc</span><span class="ccbcc">Bcc</span>
+                    </div>
+                </div>
+                <input class="form-input" formControlName="subject" placeholder="Subject">
+                <textarea formControlName="messageBody" class="message-body" *ngIf="images.length == 0">
+                    
+                </textarea>
+                <div class="image-body" *ngIf="images.length > 0">
+                    <div cdkDropList class="image-list" (cdkDropListDropped)="drop($event)">
+                        <img class="image-box" *ngFor='let url of images' cdkDrag [src]="url" width="100%" style="margin: 3px;"> <br/>
+                    </div>
+                    
+                </div>
+
+
+                <div class="compose-footer">
+                    <div class="file-uploader">
+
+                    </div>
+                    <div class="footer-btns">
+                        <div class="footer-left">
+                            <button type="submit" mat-button class="btn btn-primary" style="background-color: #1a73e8; color: white;" (click)="onNoClick()">&nbsp; Send &nbsp;</button>
+                            <span class="f-btn" matTooltip="Formating options">
+                                <i class="material-icons">&#xE165;</i>
+                            </span>
+                            
+                            <span class="f-btn" matTooltip="Attach file" (click)="file.click()">
+                                <i class="material-icons">&#xE226;</i>
+                            </span>
+                            
+                            <input type="file" style="display: none;" #file formControlName="file"/>
+
+                            <span class="f-btn" matTooltip="insert link">
+                                <i class="material-icons">&#xE157;</i>
+                            </span>
+                            
+                            <span class="f-btn" matTooltip="insert emoji">
+                                <i class="material-icons">&#xE420;</i>
+                            </span>
+                            
+                            <span class="f-btn" matTooltip="insert photo" (click)="image.click()">
+                                <i style="font-size: 18px;" class="material-icons">&#xE251;</i>
+                            </span>
+
+                            <input type="file" accept="image/*" style="display: none;" multiple (change)="onFileChange($event)" #image formControlName="image" />
+                            
+                            <span class="f-btn" matTooltip="insert signature">
+                                <i style="font-size: 18px;" class="material-icons">&#xE22B;</i>
+                            </span>
+                            
+                        </div>
+                        <div class="footer-right">
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+
+    </mat-card>
+
+</div>

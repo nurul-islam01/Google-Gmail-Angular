@@ -1,0 +1,234 @@
+/*fav button */
+
+.fab {
+    position: absolute;
+    margin-top: 15px;
+    margin-left: 10px;
+    width: 130px;
+    height: 47px;
+    background-color: #fff;
+    border-radius: 50px;
+    transition: .1s;
+    display: flex;
+    flex-direction: row;
+    align-items: center !important;
+    align-content: flex-start !important;
+    text-align: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.103), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.103);
+}
+
+.fav-active {
+    width: 50px;
+    transition: .5s;
+}
+
+.fab:hover {
+    opacity: 1;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.144), 2px 1px 5px 0 rgba(3, 3, 3, 0.137), 2px 3px 1px -2px rgba(0, 0, 0, 0.116),  2px 3px 1px 2px rgba(0, 0, 0, 0.096);
+}
+
+.fab:hover .fab-buttons {
+    visibility: visible;
+}
+
+.fab-action-button:hover+.fab-buttons .fab-buttons__link:before {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1);
+    transform-origin: right center 0;
+    transition-delay: 0.1s;
+}
+
+.fab-action-button {
+    border-radius: 50px;
+    transition: .2s;
+    position: relative;
+    display: inline;
+    position: relative;
+}
+
+.compose {
+    cursor: pointer; 
+    padding-left: 5px; 
+    font-size: .875rem;
+    font-family: 'Google Sans', 'Roboto,RobotoDraft',Helvetica,Arial,sans-serif;
+    font-weight: 500;
+    color: #3c4043;
+    opacity: 1;
+}
+
+.fab-action-button svg {
+    align-self: center !important;
+}
+
+#create-text {
+    display: block;
+    transition: 800ms;
+    word-wrap: none !important;
+}
+
+.hide {
+    display: none !important;
+    transition: 800ms !important;
+}
+
+.this-will-not-be-read {
+    display: none !important;
+}
+
+.text-active {
+    display: none;
+}
+
+.fab-action-button__icon {
+    width: 36px;
+    height: 36px;
+}
+
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
+
+
+/*fab end*/
+
+#sidebar {
+    flex: 1 100%;
+    background: transparent;
+    transition: all 0.3s;
+    height: 100%;
+    width: 250px;
+    margin-top: 78px;
+    overflow: hidden;
+}
+
+.planner {
+    overflow-y: scroll;
+    height: 100% ;
+}
+.planner ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 0em !important;
+    margin-block-end: 0em !important;
+    margin-inline-start: 0px !important;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px !important;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+.planner ul li {
+    align-items: flex-start;
+    cursor: pointer;
+    width: 100%;
+}
+
+.planner ul li a {
+    display: flex;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    letter-spacing: .01785714em;
+    font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    color: #202124;
+    align-items: center;
+    
+}
+
+ul li a {
+    text-decoration: none;
+}
+
+.planner ul li a:link {
+    text-decoration: none;
+}
+
+.planner ul li a:hover {
+    text-decoration: none;
+}
+.planner ul li a span {
+    color: #202124;
+}
+
+.planner ul li a i {
+    color: #202124c2;
+    padding: 0px 18px;
+    letter-spacing: .01785714em;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    margin-left: 8px;
+}
+
+.planner ul li a:hover {
+    background: #20212418;
+}
+
+.contact-nav-active {
+    background: #e8f0fe;
+}
+
+.contact-nav-active span {
+    color: #1a73e8 !important;
+}
+.contact-nav-active small {
+    color: #1a73e8 !important;
+}
+
+#sidebar.active {
+    width: 70px;
+}
+
+
+
+.span {
+    display: inline;
+    transition: all 0.5s;
+}
+
+.hide {
+    display: none;
+    transition: all 0.5s;
+}
+
+#sidebar .planner ul li {
+    display: flex;
+    height: 32px;
+    max-height: 32px;
+    min-height: 32px;
+}
+
+#sidebar .planner ul li a {
+    height: 32px;
+    width: 100%;
+    webkit-font-smoothing: antialiased;
+    font-family: Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    font-size: .875rem;
+    letter-spacing: .2px;
+    color: #202124;
+    text-shadow: none;
+}

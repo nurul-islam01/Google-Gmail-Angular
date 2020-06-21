@@ -1,0 +1,100 @@
+<div class="fab d-flex justify-content-center" (click)="createContactDialog()" [class.fav-active]="activeSidebar">
+    <span class="fab-action-button d-flex justify-content-center">
+        <svg class="fab-action-button__icon" width="36" height="36" viewBox="0 0 36 36"><path fill="#34A853" d="M16 16v14h4V20z"></path><path fill="#4285F4" d="M30 16H20l-4 4h14z"></path><path fill="#FBBC05" d="M6 16v4h10l4-4z"></path><path fill="#EA4335" d="M20 16V6h-4v14z"></path><path fill="none" d="M0 0h36v36H0z"></path></svg>
+    </span>
+    <span class="compose" id="create-text" [class.hide]="activeSidebar">Compose</span>
+</div>
+
+<nav id="sidebar" [class.active]="activeSidebar">
+
+
+    <div class="planner">
+
+        <ul>
+            <li><a [class.contact-nav-active]="clickedItem == 0" (click)="inbox()"><i class="material-icons">&#xE156;</i> <span [class.hide]="activeSidebar">Inbox</span> </a></li>
+            <li class=""><a ><i class="material-icons">&#xE838;</i> <span [class.hide]="activeSidebar">Starred</span> <small *ngIf="clickedItem == 1" style="float: right; position: relative; margin-right: 8px; margin-top: 4px; font-weight: 500;">{{ contactsSize ? contactsSize.length : 0}}</small> </a></li>
+            <li class=""><a ><i class="material-icons">&#xE924;</i> <span [class.hide]="activeSidebar">Snoozed</span></a></li>
+            <li class=""><a ><i class="material-icons">&#xE163;</i> <span [class.hide]="activeSidebar">Send</span></a></li>
+            <li class=""><a ><i class="material-icons">&#xE24D;</i> <span [class.hide]="activeSidebar">Drafts</span></a></li>
+            <li class=""><a ><i class="material-icons">&#xE892;</i> <span [class.hide]="activeSidebar">[Imap]/Trash</span></a></li>
+            <li class=""><a ><i class="material-icons">&#xE892;</i> <span [class.hide]="activeSidebar">Junk</span></a></li>
+            <li class=""><a ><i class="material-icons">&#xE892;</i> <span [class.hide]="activeSidebar">Junk E-mail</span></a></li>
+            <li class=""><a ><i class="material-icons">&#xE892;</i> <span [class.hide]="activeSidebar">Unwanted</span></a></li>
+            <!-- <mat-divider></mat-divider> -->
+            <li>
+                <a (click)="labelShowing()">
+                    <i *ngIf="!lable" class="material-icons">&#xE316;</i>
+                    <i *ngIf="lable" class="material-icons">&#xE313;</i> 
+                    <span *ngIf="lable" [class.hide]="activeSidebar">Less</span>
+                    <span *ngIf="!lable" [class.hide]="activeSidebar">More</span>
+                </a>
+            </li>
+            
+            <ng-container *ngIf="lable">
+                <li>
+                    <a style="display: flex; justify-content: space-between;">
+                        <span>
+                            <i style="position: relative; top: 5px;" class="material-icons">&#xE8E6;</i>
+                            <span [class.hide]="activeSidebar">Important</span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a style="display: flex; justify-content: space-between;">
+                       
+                        <span>
+                            <i style="position: relative; top: 5px;" class="material-icons">&#xE0BE;</i>
+                            <span [class.hide]="activeSidebar">All Mail</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a style="display: flex; justify-content: space-between;">
+                       
+                        <span>
+                            <i style="position: relative; top: 5px;" class="material-icons">&#xE160;</i>
+                            <span [class.hide]="activeSidebar">Spam</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a style="display: flex; justify-content: space-between;">
+                       
+                        <span>
+                            <i style="position: relative; top: 5px;" class="material-icons">&#xE872;</i>
+                            <span [class.hide]="activeSidebar">Trash</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li (click)="manageLabel()">
+                    <a style="display: flex; justify-content: space-between;">
+                       
+                        <span>
+                            <i style="position: relative; top: 5px;" class="material-icons">&#xE8B8;</i>
+                            <span [class.hide]="activeSidebar">Manage label</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li (click)="createLabel()">
+                    <a style="display: flex; justify-content: space-between;">
+                       
+                        <span>
+                            <i style="position: relative; top: 5px;" class="material-icons">&#xE145;</i>
+                            <span [class.hide]="activeSidebar">Create new label</span>
+                        </span>
+                    </a>
+                </li>
+
+
+                
+            </ng-container>
+            
+        
+        </ul>
+
+    </div>
+</nav>

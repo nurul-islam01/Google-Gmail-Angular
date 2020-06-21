@@ -1,0 +1,31 @@
+<nav class="nav navbar">
+    <div class="nav-left">
+        <button type="button" id="sidebarCollapse" (click)="toggleSideNav()" [class.navbar-active]="isOpen" class="d-flex justify-content-center btn navbar-btn">
+              <i class="material-icons" style="font-size: 23px;">&#xE3C7;</i>
+          </button>
+        <img class="google-calender-image" src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x.png" alt="">
+        <!-- <span class="nav-text">Contact</span> -->
+
+        <form class="search-form" method="post">
+            <button style="margin-left: 10px;" data-toggle="tooltip" data-placement="bottom" title="Search" class="btn d-flex justify-content-center buttonwithborder" id="searchbtn"><i style="margin-top: 2px;" class="material-icons">&#xE8B6;</i></button>
+            <input type="text" (keyup)="applyFilter($event.target.value)" class="textbox" placeholder="Search mail">
+            <button data-toggle="tooltip" data-placement="bottom" title="Search" class="btn d-flex justify-content-center buttonwithborder" id="searchbtn"><i class="material-icons">&#xE5C5;</i></button>
+        </form>
+    </div>
+
+
+    <div class="nav-end">
+
+        <button data-toggle="tooltip" data-placement="bottom" title="Support" class="btn d-flex justify-content-center buttonwithborder" id="supportbtn"><i class="material-icons">&#xE8FD;</i></button>
+        <button data-toggle="tooltip" data-placement="bottom" title="Settings menu" class="btn d-flex justify-content-center buttonwithborder" id="settingsbtn"><i class="material-icons">&#xE8B8;</i></button>
+
+
+        <button  class="btn d-flex justify-content-center buttonwithborder" data-toggle="tooltip" data-placement="bottom" title="Apps" id="appsbtn"><i class="material-icons">&#xE5C3;</i></button>
+        
+        
+        <button [matMenuTriggerFor]="appMenu" class="d-flex justify-content-center" data-toggle="tooltip" data-placement="bottom" title="Log out" id="profilebtn"><img src="assets/images/logout.png"  alt=""></button>
+        <mat-menu #appMenu="matMenu">
+            <button mat-menu-item (click)="logout()">Log out</button>
+          </mat-menu>
+    </div>
+</nav>

@@ -1,0 +1,148 @@
+<div style="display: flex;">
+
+  <div class="detail-container">
+    <div class="mail-header">
+        
+        <div style="display: flex;">
+          <span style="cursor: pointer; margin-right: 15px; margin-left: 0px;" (click)="backToMailBox()" matTooltip="Back to inbox"  class="mail-header-btn">
+            <i style="font-size: 20px; color: rgba(87, 83, 83, 0.788);" class="material-icons">&#xE5C4;</i>
+          </span>
+  
+          <!-- <span style="cursor: pointer; margin-left: 15px;"  matTooltip="Refresh"  class="mail-header-btn">
+            <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE5D5;</i>
+          </span> -->
+          
+          <span style="cursor: pointer;" class="mail-header-btn" matTooltip="Archive" >
+            <i style="font-size: 20px;" class="material-icons">&#xE149;</i>
+          </span>
+          
+          <span style="cursor: pointer;" class="mail-header-btn" matTooltip="Report spam" >
+            <i style="font-size: 20px;" class="material-icons">&#xE160;</i>
+          </span>
+          
+          <span  style="cursor: pointer;" class="mail-header-btn" matTooltip="Delete" >
+            <i style="font-size: 20px;" class="material-icons">&#xE872;</i>
+          </span>
+          
+          <div  style="height: 25px; width: 1px; background-color: rgba(128, 128, 128, 0.233); margin-left: 15px; margin-right: 15px;"></div>
+      
+          <span style="cursor: pointer;" class="mail-header-btn" matTooltip="Mark as read" >
+            <i style="font-size: 20px;" class="material-icons">&#xE151;</i>
+          </span>
+          
+          <span  style="cursor: pointer;" class="mail-header-btn" matTooltip="Snooze" >
+            <i style="font-size: 20px;" class="material-icons">&#xE924;</i>
+          </span>
+          
+          <span style="cursor: pointer;" class="mail-header-btn" matTooltip="Add to task" >
+            <i style="font-size: 20px; " class="material-icons">&#xE03B;</i>
+          </span>
+      
+          <div style="height: 25px; width: 1px; background-color: rgba(128, 128, 128, 0.233); margin-left: 15px; margin-right: 15px;"></div>
+          
+          <span  style="cursor: pointer;" class="mail-header-btn" matTooltip="Move to" >
+            <i style="font-size: 20px;" class="material-icons">&#xE41E;</i>
+          </span>
+          
+          <span  style="cursor: pointer;" class="mail-header-btn" matTooltip="Labels" >
+            <i style="font-size: 20px; " class="material-icons">&#xE892;</i>
+          </span>
+          
+          <span style="cursor: pointer;" class="mail-header-btn" matTooltip="More" [matMenuTriggerFor]="headerMore">
+            <i style="font-size: 20px;" class="material-icons">&#xE5D4;</i>
+          </span>
+          
+          <mat-menu #headerMore="matMenu">
+            <button mat-menu-item>Mark as unread</button>
+            <button mat-menu-item>Mark as important</button>
+            <button mat-menu-item>Add star</button>
+            <button mat-menu-item>Creat event</button>
+            <button mat-menu-item>Filter messages like this</button>
+            <button mat-menu-item>Mute</button>
+  
+          </mat-menu>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: nowrap; overflow: hidden;">
+          <small style="margin-right: 20px;">2 of 428 </small>
+          <span style="cursor: pointer;" class="mail-btn" matTooltip="Newer" >
+            <i class="material-icons" style="color: gray; padding: 4px; font-size: 20px;">&#xE314;</i>
+          </span>
+          
+          <span style="cursor: pointer;" class="mail-btn" matTooltip="Older" >
+            <i class="material-icons" style="color: gray; padding: 4px; font-size: 20px;">&#xE315;</i>
+          </span>
+  
+        </div>
+    </div>
+  
+    <div class="body-details">
+      <div class="mail-title">
+        <span class="title">Dipu and Abe want to join your network</span>
+        <span style=" display: flex; justify-items: center;">
+          <span style="cursor: pointer;" class="mail-btn" matTooltip="Print all" >
+            <i class="material-icons" style="color: gray; padding: 4px; font-size: 20px;">&#xE8AD;</i>
+          </span>
+          
+          <span style="cursor: pointer;" class="mail-btn" matTooltip="In new window" >
+            <i class="material-icons" style="color: gray; padding: 4px; font-size: 20px;">&#xE89E;</i>
+          </span>
+  
+        </span>
+      </div>
+      <div class="mail-body">
+        <div class="left-bar">
+          <div class="mail-profile">
+            <i style="color: #cccccc;" class="material-icons">&#xE7FD;</i>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; padding-left: 8px;">
+          <div style="display: flex; justify-content: space-between; margin-top: -2px; margin-bottom: 5px;">
+            <div style="display: inline; flex-direction: column;">
+              <span style="font-weight: 550; font-size: 14px; color: black;"> {{name}} <small>&#60;nurul.islma3f@gmail.com&#62;</small></span> 
+              
+              <br><small style="display: flex; justify-items: center;">to me <i class="material-icons title-bottom-arrow-bt ">&#xE5C5;</i> </small>
+            </div>
+            <div style="display: flex; justify-content: center; justify-items: center; align-items: center;">
+              <small style="margin-right: 20px;">8:20 Am (2 hours ago)</small>
+              <span style="cursor: pointer;;" class="mail-btn" matTooltip="not starred" >
+                <i class="material-icons" style="color: gray; padding: 4px; font-size: 20px;">&#xE83A;</i>
+              </span>
+              
+              <span style="cursor: pointer;" class="mail-btn" matTooltip="Starred" >
+                <i class="material-icons" style="color: gray; padding: 4px;  font-size: 20px;">&#xE838;</i>
+              </span>
+              
+              <span style="cursor: pointer;" class="mail-btn" matTooltip="Reply" >
+                <i class="material-icons" style="color: gray; padding: 4px;  font-size: 20px;">&#xE15E;</i>
+              </span>
+              
+              <span style="cursor: pointer;" class="mail-btn" matTooltip="More" [matMenuTriggerFor]="detailsMore">
+                <i class="material-icons" style="color: gray; padding: 4px;  font-size: 20px;">&#xE5D4;</i>
+              </span>
+  
+              <mat-menu #detailsMore="matMenu">
+                <button mat-menu-item style="display: flex; align-items: center;"><i class="material-icons" style=" margin-right: 5px;">&#xE15E;</i> Replay </button>
+                <button mat-menu-item style="display: flex; align-items: center;"><i class="material-icons" style=" margin-right: 5px;">&#xE154;</i> Forword </button>
+                <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Filter messages like this</button>
+                <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Print</button>
+                <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Delete this message</button>
+                <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Block '{{name}}'</button>
+                <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Report spam</button>
+                <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Mark as unread</button>
+  
+              </mat-menu>
+              
+            </div>
+          </div>
+          <div [innerHtml]="mailBodyHtml" class="details"> </div>
+
+          <div style="display: flex; padding-top: 40px; padding-bottom: 40px;">
+            <button mat-stroked-button><i class="material-icons" style=" font-size: 20px;">&#xE15E;</i> &nbsp;&nbsp;Reply  &nbsp;	&nbsp;	</button>
+            <button mat-stroked-button style="margin-left: 15px;"><i class="material-icons" style=" font-size: 20px;">&#xE154;</i> &nbsp;&nbsp;Forward  &nbsp;	&nbsp;	</button>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  
+
