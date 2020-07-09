@@ -4,11 +4,24 @@
       <mat-checkbox (change)="$event ? masterToggle() : null"
         [checked]="selection.hasValue() && isAllSelected()"
         [indeterminate]="selection.hasValue() && !isAllSelected()"
+        [disabled]="dataSource.data.length == 0"
         [aria-label]="checkboxLabel()" matTooltip="Select"  style=" margin-bottom: -3px; margin-right: 2px;">
       </mat-checkbox>
-      <span style="cursor: pointer;" class="btn-light" matTooltip="Select" >
+
+      <span style="cursor: pointer;" class="btn-light" matTooltip="Select" [matMenuTriggerFor]="select">
         <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE5C5;</i>
       </span>
+      <mat-menu #select="matMenu">
+        <button mat-menu-item (click)="masterToggle()">All</button>
+        <button mat-menu-item (click)="onClearSelected()">None</button>
+        <button mat-menu-item (click)="onReadSelected()">Read</button>
+        <button mat-menu-item (click)="onUnReadSelected()">Unread</button>
+        <button mat-menu-item (click)="onStarredSelected()">Starred</button>
+        <button mat-menu-item (click)="onUnStarredSelected()">Unstarred</button>
+
+      </mat-menu>
+      
+
       
       <span *ngIf="!selection.hasValue()" style="cursor: pointer; margin-left: 15px;"  matTooltip="Refresh"  class="mail-header-btn">
         <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE5D5;</i>
@@ -18,23 +31,53 @@
         <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE149;</i>
       </span>
       
-      <span  *ngIf="selection.hasValue() "  style="cursor: pointer;" class="mail-header-btn" matTooltip="Report spam" >
+      <span (click)="onReport()" *ngIf="selection.hasValue() "  style="cursor: pointer;" class="mail-header-btn" matTooltip="Report spam" >
         <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE160;</i>
       </span>
       
-      <span *ngIf="selection.hasValue() "  style="cursor: pointer;" class="mail-header-btn" matTooltip="Delete" >
+      <span (click)="onMarkDelete()" *ngIf="selection.hasValue() "  style="cursor: pointer;" class="mail-header-btn" matTooltip="Delete" >
         <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE872;</i>
       </span>
       
       <div *ngIf="selection.hasValue()"  style="height: 25px; width: 1px; background-color: rgba(128, 128, 128, 0.233); margin-left: 15px; margin-right: 15px;"></div>
 
-      <span *ngIf="selection.hasValue()"  style="cursor: pointer;" class="mail-header-btn" matTooltip="Mark as read" >
+      <span *ngIf="selection.hasValue()" (click)="onReadSelected()" style="cursor: pointer;" class="mail-header-btn" matTooltip="Mark as read" >
         <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE151;</i>
       </span>
       
-      <span *ngIf="selection.hasValue() "  style="cursor: pointer;" class="mail-header-btn" matTooltip="Snooze" >
+      <span *ngIf="selection.hasValue()"  [matMenuTriggerFor]="topSnooze"  style="cursor: pointer;" class="mail-header-btn" matTooltip="Snooze" >
         <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE924;</i>
       </span>
+
+      <mat-menu #topSnooze="matMenu">
+        <button style="width: 100%; border: none; background-color: white; text-align: left; padding-bottom: 5px; padding-left: 15px; font-size: 14px;">Snooze until...</button>
+        <button mat-menu-item style="display: flex; justify-content: space-between;">
+          <span>Later today</span> 
+          <span>{{getDate(6)}}</span>
+        </button>
+
+        <button mat-menu-item style="display: flex; justify-content: space-between;">
+          <span>Tomorrow</span>
+          <span>{{getDate(24)}}</span>
+        </button>
+
+        <button mat-menu-item style="display: flex; justify-content: space-between;">
+          <span>Late this week</span>
+          <span>{{getDate(48)}}</span>
+        </button>
+
+        <button mat-menu-item style="display: flex; justify-content: space-between;">
+          <span>This weekend</span>
+          <span>{{getWeekend()}}</span>
+        </button>
+        <button mat-menu-item style="display: flex; justify-content: space-between;">
+          <span>Last week</span>
+          <span>{{getDate(-164)}}</span>
+        </button>
+        <mat-divider style="margin-top: 4px; margin-bottom: 4px;"></mat-divider>
+        <button mat-menu-item (click)="snoozeSelect()" style="display: flex; align-items: center;"> <i class="material-icons" style="margin-right: 10px;">&#xE916;</i> Pick date time </button>
+
+      </mat-menu>
       
       <span *ngIf="selection.hasValue()"  style="cursor: pointer;" class="mail-header-btn" matTooltip="Add to task" >
         <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE03B;</i>
@@ -42,19 +85,88 @@
 
       <div *ngIf="selection.hasValue()"  style="height: 25px; width: 1px; background-color: rgba(128, 128, 128, 0.233); margin-left: 15px; margin-right: 15px;"></div>
       
-      <span *ngIf="selection.hasValue()"  style="cursor: pointer;" class="mail-header-btn" matTooltip="Move to" >
+      <span *ngIf="selection.hasValue()" [matMenuTriggerFor]="htMove" style="cursor: pointer;" class="mail-header-btn" matTooltip="Move to" >
         <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE41E;</i>
       </span>
+
+      <mat-menu #htMove="matMenu">
+        <span style="display: flex; padding-left: 10px;">Move to :</span>
+
+        <div style="display: flex; width: 100%; flex-direction: column; " >
+            <form (click)="stopPropagation($event)" [formGroup]="searchForm" class="search-form" id="serachFrom" cdkTrapFocus cdkTrapFocusAutoCapture>
+                <input [(ngModel)]="label" id="search" formControlName="search"  type="text" name="search" autofocus="true" value=" " />
+                <label for="search" style=" cursor: pointer;;margin-left: -30px; display: inline-flex; align-items: center; margin-top: 3px;"><i class="material-icons">&#xE8B6;</i></label>
+            </form>
+            
+            <div style="height: 220px; overflow-y: auto;">
+              <button mat-menu-item *ngFor="let lab of labels | filterlabels:label">{{lab}} </button>
+            </div>
+        </div>
+        
+        <!-- <span><input type="text" matInput /> </span> -->
+        
+        <mat-divider></mat-divider>
+        <button mat-menu-item >Spam </button>
+        <button mat-menu-item >Trash </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="createLabel()">Create new </button>
+        <button mat-menu-item >Manage label </button>
+        
+
+      </mat-menu>
       
-      <span *ngIf="selection.hasValue()"  style="cursor: pointer;" class="mail-header-btn" matTooltip="Labels" >
+      <span *ngIf="selection.hasValue()" [matMenuTriggerFor]="htLabels" style="cursor: pointer;" class="mail-header-btn" matTooltip="Labels" >
         <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE892;</i>
       </span>
+
+
+      <mat-menu #htLabels="matMenu">
+        <span style="display: flex; padding-left: 10px;">Lbel as :</span>
+
+        <div style="display: flex; width: 100%; flex-direction: column;" >
+            <form (click)="stopPropagation($event)" [formGroup]="searchForm" class="search-form" id="serachFrom" cdkTrapFocus cdkTrapFocusAutoCapture>
+                <input [(ngModel)]="label" id="search" formControlName="search"  type="text" name="search" autofocus="true" value=" " />
+                <label for="search" style=" cursor: pointer;;margin-left: -30px; display: inline-flex; align-items: center; margin-top: 3px;"><i class="material-icons">&#xE8B6;</i></label>
+            </form>
+            
+            <mat-selection-list #shoes>
+                <mat-list-option checkboxPosition="before" *ngFor="let lab of labels | filterlabels:label">
+                  {{lab}}
+                </mat-list-option>
+              </mat-selection-list>
+              
+        </div>
+        
+        <!-- <span><input type="text" matInput /> </span> -->
+        
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="createLabel()">Create new </button>
+        <button mat-menu-item >Manage label </button>
+        
+
+      </mat-menu>
       
-      <span style="cursor: pointer;" class="mail-header-btn" matTooltip="More" >
+      <span style="cursor: pointer;" class="mail-header-btn" matTooltip="More" [matMenuTriggerFor]="mHeaderMore">
         <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE5D4;</i>
       </span>
       
+      <mat-menu #mHeaderMore="matMenu">
+        <button *ngIf="!selection.hasValue()" mat-menu-item>Mark all as read</button>
+        <mat-divider *ngIf="!selection.hasValue()" style="margin-top: 5px; margin-bottom: 5px;"></mat-divider>
+        <div *ngIf="!selection.hasValue()" style="font-style: italic; padding: 5px 10px; width: 100%; font-weight: 300; border: none; text-align: left; font-size: 12px;">Select messages to see more actions</div>
 
+        <button *ngIf="selection.hasValue()" mat-menu-item (click)="onReadSelected()">Mark as read</button>
+        <button *ngIf="selection.hasValue()" mat-menu-item (click)="onUnReadSelected()">Mark as unread</button>
+        <button *ngIf="selection.hasValue()" mat-menu-item>Mark as imporatant</button>
+        <button *ngIf="selection.hasValue()" mat-menu-item>Mark as no imporatant</button>
+        <button *ngIf="selection.hasValue()" mat-menu-item (click)="onStarredSelected()">Add star</button>
+        <button *ngIf="selection.hasValue()" mat-menu-item (click)="onUnStarredSelected()">Remove star</button>
+        <button *ngIf="selection.hasValue()" mat-menu-item>Filter messages like this</button>
+        <button *ngIf="selection.hasValue()" mat-menu-item>Mute</button>
+        <button *ngIf="selection.hasValue()" mat-menu-item>Forward as attachment</button>
+
+      </mat-menu>
+      
 
     </div>
     
@@ -71,15 +183,18 @@
                           [aria-label]="checkboxLabel()">
             </mat-checkbox> -->
           </th>
-          <td mat-cell *matCellDef="let row; let i=index" style="width: 290px;">
-            <mat-checkbox (click)="$event.stopPropagation()"
+          <td mat-cell *matCellDef="let row; let i=index" style="width: 290px; display: flex;">
+            <div style="display: flex; height: 50px; line-height: 50px;">
+              <mat-checkbox (click)="$event.stopPropagation()"
                           (change)="$event ? selection.toggle(row) : null"
                           [checked]="selection.isSelected(row)"
                           [aria-label]="checkboxLabel(row, i)">
-            </mat-checkbox>
-            
-            <i class="material-icons star-icon">&#xE83A;</i>
-            <span (click)="detailsPage()"  class="mail-title">Linkedin kahfkahfkahfksh fkshfks hfkshf kshfkshfkhskfhskfshkfh</span>
+              </mat-checkbox>
+              
+              <i *ngIf="!row.isStarred" (click)="onStar(row, true)" class="material-icons star-icon" >&#xE83A;</i>
+              <i *ngIf="row.isStarred" (click)="onStar(row, false)" class="material-icons star-icon" style="color: rgb(250, 214, 8);">&#xE838;</i>
+              <span (click)="detailsPage()"  class="mail-title">Linkedin kahfkahfkahfksh fkshfks hfkshf kshfkshfkhskfhskfshkfh</span>
+            </div>
           </td>
         </ng-container>
       
@@ -88,45 +203,79 @@
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element" class="mail-subtitle" style="cursor: pointer; display: flex; align-items: center; line-height: 50px; vertical-align: middle;"> 
-              <span (click)="detailsPage()" class="mail-subtitle" style="width: 100%;">{{element.name}}</span> 
+          <td mat-cell *matCellDef="let element; let i = index"  class="mail-subtitle" style="cursor: pointer; display: flex; padding-left: 20px; flex-direction: column;"> 
+              <div  style="display: flex; height: 50px; line-height: 50px;">
+                <span (click)="detailsPage()" class="mail-subtitle" style="width: 100%;">{{element.name}}</span> 
+              
+                <small class="mail-date">Jun 16</small>
 
-              <small class="mail-date">Jun 16</small>
+                <span style="cursor: pointer;" class="mail-btn" matTooltip="Archive" >
+                  <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE149;</i>
+                </span>
+                <span (click)="onDelete(element, i)" style="cursor: pointer;" class="mail-btn" matTooltip="Delete" >
+                  <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE872;</i>
+                </span>
+                <span style="cursor: pointer;" (click)="onRead(i, true)" *ngIf="!element.isRead" class="mail-btn" matTooltip="Mark as read" >
+                  <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE151;</i>
+                </span>
+                
+                <span style="cursor: pointer;" (click)="onRead(i, false)" *ngIf="element.isRead" class="mail-btn" matTooltip="Mark as unread" >
+                  <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE0BE;</i>
+                </span>
 
-              <span style="cursor: pointer;" class="mail-btn" matTooltip="Archive" >
-                <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE149;</i>
-              </span>
-              <span style="cursor: pointer;" class="mail-btn" matTooltip="Delete" >
-                <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE872;</i>
-              </span>
-              <span style="cursor: pointer;" class="mail-btn" matTooltip="Mark as read" >
-                <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE151;</i>
+                <span style="cursor: pointer;" class="mail-btn" matTooltip="Snooze" [matMenuTriggerFor]="snooze">
+                  <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE924;</i>
+                </span>
+                
+                <mat-menu #snooze="matMenu">
+                  <button style="width: 100%; border: none; background-color: white; text-align: left; padding-bottom: 5px; padding-left: 15px; font-size: 14px;">Snooze until...</button>
+                  <button mat-menu-item style="display: flex; justify-content: space-between;">
+                    <span>Later today</span> 
+                    <span>{{getDate(6)}}</span>
+                  </button>
+          
+                  <button mat-menu-item style="display: flex; justify-content: space-between;">
+                    <span>Tomorrow</span>
+                    <span>{{getDate(24)}}</span>
+                  </button>
+          
+                  <button mat-menu-item style="display: flex; justify-content: space-between;">
+                    <span>Late this week</span>
+                    <span>{{getDate(48)}}</span>
+                  </button>
+          
+                  <button mat-menu-item style="display: flex; justify-content: space-between;">
+                    <span>This weekend</span>
+                    <span>{{getWeekend()}}</span>
+                  </button>
+                  <button mat-menu-item style="display: flex; justify-content: space-between;">
+                    <span>Last week</span>
+                    <span>{{getDate(-164)}}</span>
+                  </button>
+                  <mat-divider style="margin-top: 4px; margin-bottom: 4px;"></mat-divider>
+                  <button (click)="snoozeSelect()" mat-menu-item style="display: flex; align-items: center;"> <i class="material-icons" style="margin-right: 10px;">&#xE916;</i> Pick date time </button>
+          
+                </mat-menu>
+              </div>
+              <div (click)="detailsPage()" *ngIf="element.hasFile" style="display: flex; justify-content: flex-start; height: 40px; line-height: 40px;">
+                <span class="file-item"> <i style="font-size: 20px; color:red" class="material-icons">&#xE415;</i> 
+                  <span class="file-text">Nurul islam CValjflajflsjflajflsjf</span> 
               </span>
               
-              <span style="cursor: pointer;" class="mail-btn" matTooltip="Mark as unread" >
-                <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE159;</i>
+                <span class="file-item"> <i style="font-size: 20px; color:red" class="material-icons">&#xE251;</i> 
+                  <span class="file-text">Nurul islam CValjflajflsjflajflsjf</span> 
+              </span>
+                <span class="file-item"> <i style="font-size: 20px; color:red" class="material-icons">&#xE404;</i> 
+                  <span class="file-text">Nurul islam CValjflajflsjflajflsjf</span> 
               </span>
 
-              <span style="cursor: pointer;" class="mail-btn" matTooltip="Snooze" [matMenuTriggerFor]="snooze">
-                <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE924;</i>
-              </span>
-              
-              <mat-menu #snooze="matMenu">
-                <button style="width: 100%; border: none; background-color: white; text-align: left; padding-bottom: 5px; padding-left: 15px; font-size: 14px;">Snooze until</button>
-                <button mat-menu-item>Later today </button>
-                <button mat-menu-item>Add star</button>
-                <button mat-menu-item>Creat event</button>
-                <button mat-menu-item>Filter messages like this</button>
-                <button mat-menu-item>Mute</button>
-      
-              </mat-menu>
+              </div>
           </td>
 
         </ng-container>
       
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-            >
+        <tr [class.is-read]="row.isRead" [class.has-file]="row.hasFile" mat-row *matRowDef="let row; columns: displayedColumns;">
         </tr>
       </table>
     </div>

@@ -1,85 +1,158 @@
-<div >
 
-    <mat-card class="compose-card">
+<mat-card class="compose-card">
 
-        <div class="title">
-            <span style="font-size: 14px; color: white;">New Message</span>
-            <span>
-                <i class="material-icons title-icon ">&#xE15B;</i>
-                <i class="material-icons title-icon">&#xE56B;</i>
-                <i class="material-icons title-icon">&#xE5CD;</i>
-            </span>
-        </div>
+    <div class="title" (click)="toggleTitle()">
+        <span style="font-size: 14px; color: white;">New Message</span>
+        <span class="t-icons">
+            <i class="material-icons title-icon" >&#xE15B;</i>
+            <i class="material-icons title-icon">&#xE56B;</i>
+            <i (click)="closeCompose()" class="material-icons title-icon">&#xE5CD;</i>
+        </span>
+    </div>
 
-        <div class="compose-body">
-            <form class="compose-form" [formGroup]="composeForm">
+    <div class="compose-body" *ngIf="isExpand">
+        <form class="compose-form" [formGroup]="composeForm">
 
-                <div class="form-input">
-                    <span style="width: 100%; display: block;" (click)="recipentClick()"  *ngIf="recipentVisibility">Recipent</span>
-                    <div style="width: 100%; display: flex; align-items: center;" *ngIf="!recipentVisibility">
-                        <span style="padding-right: 3px;">To</span>
-                        <input type="text"  (blur)="toFocusOut()" autofocus formControlName="to" style="width: 100%; outline: none; background: white; border: none;">
-                        <span class="ccbcc">Cc</span><span class="ccbcc">Bcc</span>
-                    </div>
+            <div class="form-input">
+                <span style="width: 100%; display: block;" (click)="recipentClick()"  *ngIf="recipentVisibility">Recipent</span>
+                <div style="width: 100%; display: flex; align-items: center;" *ngIf="!recipentVisibility">
+                    <span style="padding-right: 3px;">To</span>
+                    <input type="text"  (blur)="toFocusOut()" autofocus="" formControlName="to" style="width: 100%; outline: none; background: white; border: none;">
+                    <span class="ccbcc">Cc</span><span class="ccbcc">Bcc</span>
                 </div>
-                <input class="form-input" formControlName="subject" placeholder="Subject">
-                <textarea formControlName="messageBody" class="message-body" *ngIf="images.length == 0">
+            </div>
+            <input class="form-input" formControlName="subject" placeholder="Subject">
+        
+            <!-- <quill-editor (onEditorCreated)="onEditorCreated($event)" 
+                id="messageBody" 
+                [styles]="editorStyle" 
+                formControlName="messageBody" 
+                placeholder="" 
+                class="message-body" 
+                [modules]="editorShow ? showConfig : hideConfig">
+            </quill-editor> -->
+<!-- 
+            <ckeditor formControlName="messageBody" 
+                placeholder="" 
+                class="message-body" 
+                id="messageBody"  
+                [editor]="Editor" 
+                data="">
+            </ckeditor> -->
+            <div class="message-body">
+                <ckeditor formControlName="messageBody" 
+                    placeholder="" 
+                    class="message-body" 
+                    id="editor"  
+                    [editor]="Editor" 
+                    #editor
+                    data="">
                     
-                </textarea>
-                <div class="image-body" *ngIf="images.length > 0">
-                    <div cdkDropList class="image-list" (cdkDropListDropped)="drop($event)">
-                        <img class="image-box" *ngFor='let url of images' cdkDrag [src]="url" width="100%" style="margin: 3px;"> <br/>
-                    </div>
-                    
+                </ckeditor> 
+
+                <div class="file-uploader" *ngFor="let file of fileUploads; let i = index">
+                    <span style="background-color: #ececec; display: flex; align-items: center; padding-right: 8px;">
+                        <span class="file-name">{{file.name}}</span> <span>&nbsp;({{file.size}})</span>
+                        <mat-progress-bar style="width: 150px; height: 10px; margin-left: 8px; margin-right: 8px;" mode="determinate" [value]="file.percentage"></mat-progress-bar>
+                        <i (click)="removeUploadItem(i)" style="font-size: 16px; display: inline; cursor: pointer;" class="material-icons">&#xE5CD;</i>
+                    </span>
                 </div>
+    
+            </div>
+            
+           
+            <div class="compose-footer">
+    
+                <div class="footer-btns">
+                    <div class="footer-left">
+                        <button type="submit" mat-button class="btn btn-primary" style="background-color: #1a73e8; color: white;" (click)="onNoClick()">&nbsp; Send &nbsp;</button>
+                        
+                        <span class="f-btn" (click)="formatingText()" matTooltip="Formating options">
+                            <i class="material-icons">&#xE165;</i>
+                        </span>
+                        
+                        <span class="f-btn" matTooltip="Attach file" (click)="file.click()">
+                            <i class="material-icons">&#xE226;</i>
+                        </span>
+                        
+                        <input type="file" style="display: none;" #file multiple formControlName="file" (change)="uploadFileToServer($event)"/>
 
+                        <span class="f-btn" #link (click)="composeLink()" matTooltip="insert link">
+                            <i class="material-icons">&#xE157;</i>
+                        </span>
+                        
+                        <span class="f-btn" matTooltip="insert emoji">
+                            <i class="material-icons">&#xE420;</i>
+                        </span>
+                        
+                        <span class="f-btn" matTooltip="insert photo" (click)="image.click()">
+                            <i style="font-size: 18px;" class="material-icons">&#xE251;</i>
+                        </span>
 
-                <div class="compose-footer">
-                    <div class="file-uploader">
-
+                        <input type="file" accept="image/*" style="display: none;" multiple (change)="onFileChange($event)" #image formControlName="image" />
+                        
+                        <span class="f-btn" matTooltip="insert signature">
+                            <i style="font-size: 18px;" class="material-icons">&#xE22B;</i>
+                        </span>
+                        
                     </div>
-                    <div class="footer-btns">
-                        <div class="footer-left">
-                            <button type="submit" mat-button class="btn btn-primary" style="background-color: #1a73e8; color: white;" (click)="onNoClick()">&nbsp; Send &nbsp;</button>
-                            <span class="f-btn" matTooltip="Formating options">
-                                <i class="material-icons">&#xE165;</i>
-                            </span>
-                            
-                            <span class="f-btn" matTooltip="Attach file" (click)="file.click()">
-                                <i class="material-icons">&#xE226;</i>
-                            </span>
-                            
-                            <input type="file" style="display: none;" #file formControlName="file"/>
+                    <div class="footer-right">
+                        <span class="fr-btn" matTooltip="More options"  [matMenuTriggerFor]="frMore">
+                            <i style="font-size: 18px;" class="material-icons">&#xE5D4;</i>
+                        </span>
 
-                            <span class="f-btn" matTooltip="insert link">
-                                <i class="material-icons">&#xE157;</i>
-                            </span>
-                            
-                            <span class="f-btn" matTooltip="insert emoji">
-                                <i class="material-icons">&#xE420;</i>
-                            </span>
-                            
-                            <span class="f-btn" matTooltip="insert photo" (click)="image.click()">
-                                <i style="font-size: 18px;" class="material-icons">&#xE251;</i>
-                            </span>
+                        <mat-menu #frMore="matMenu">
+                            <button mat-menu-item>Default full screen</button>
+                            <mat-divider></mat-divider>
+                            <button mat-menu-item [matMenuTriggerFor]="frLabel" (mouseenter)="focusSerch()">Label</button>
+                            <button mat-menu-item>Plain text mode</button>
+                            <mat-divider></mat-divider>
+                            <button mat-menu-item>Print</button>
+                            <button mat-menu-item>Check spelling</button>
+                            <mat-divider></mat-divider>
+                            <button mat-menu-item>Smart compose feedback</button>
+                  
+                        </mat-menu>
 
-                            <input type="file" accept="image/*" style="display: none;" multiple (change)="onFileChange($event)" #image formControlName="image" />
+                        <mat-menu #frLabel="matMenu" yPosition="above">
+                            <span style="display: flex; padding-left: 10px;">Lbel as :</span>
+
+                            <div style="display: flex; width: 100%; flex-direction: column;" >
+                                <form (click)="stopPropagation($event)" [formGroup]="searchForm" class="search-form" id="serachFrom" cdkTrapFocus cdkTrapFocusAutoCapture>
+                                    <input [(ngModel)]="label" id="search" formControlName="search"  type="text" name="search" tabindex="-1" autofocus="true" value=" " />
+                                    <label for="search" style=" cursor: pointer;;margin-left: -30px; display: inline-flex; align-items: center; margin-top: 3px;"><i class="material-icons">&#xE8B6;</i></label>
+                                </form>
+                                
+                                <mat-selection-list #shoes>
+                                    <mat-list-option checkboxPosition="before" *ngFor="let lab of labels | filterlabels:label">
+                                      {{lab}}
+                                    </mat-list-option>
+                                  </mat-selection-list>
+                                  
+                            </div>
                             
-                            <span class="f-btn" matTooltip="insert signature">
-                                <i style="font-size: 18px;" class="material-icons">&#xE22B;</i>
-                            </span>
+                            <!-- <span><input type="text" matInput /> </span> -->
                             
-                        </div>
-                        <div class="footer-right">
-                            
-                        </div>
+                            <mat-divider></mat-divider>
+                            <button mat-menu-item >Label </button>
+                            <button mat-menu-item>Plain text mode</button>
+                            <mat-divider></mat-divider>
+                            <button mat-menu-item>Print</button>
+                            <button mat-menu-item>Check spelling</button>
+                            <mat-divider></mat-divider>
+                            <button mat-menu-item>Smart compose feedback</button>
+                  
+                          </mat-menu>
+
+                        <span class="fr-btn" matTooltip="Discard draft">
+                            <i style="font-size: 18px;" class="material-icons">&#xE872;</i>
+                        </span>
+                        
                     </div>
                 </div>
+            </div>
 
+        </form>
+    </div>
 
-            </form>
-        </div>
-
-    </mat-card>
-
-</div>
+</mat-card>

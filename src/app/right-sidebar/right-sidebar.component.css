@@ -1,5 +1,6 @@
 .right-sidebar {
-    width: 56px;
+    width: 56px !important;
+    max-width: 56px !important;
     height: 93.2vh;
     border-left: 1px solid rgba(128, 128, 128, 0.233);
     display: flex;
@@ -23,4 +24,8 @@
 
 .rightbar-icon:hover {
     background-color: rgba(0, 0, 0, 0.034);
+}
+
+.display-none {
+    display: none;
 }

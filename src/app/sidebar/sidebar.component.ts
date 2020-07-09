@@ -1,7 +1,8 @@
+import { SidebarService } from './sidebar.service';
 import { LabelCreateComponent } from './../dialog/label-create/label-create.component';
 import { Router } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import { Subscription, Subject } from 'rxjs';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { MainService } from '../main/main.service';
 import { Label } from './../models/label.model';
@@ -21,6 +22,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   lable = false;
   blob;
 
+  cOpenClose = false;
+
   labelsRows: any = [];
   userEmail: string;
 
@@ -31,7 +34,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private mainService: MainService,
     private _snackBar: MatSnackBar,
     private router: Router,
-
+    private sidebarService: SidebarService,
     ) { }
 
   ngOnInit() {
@@ -39,15 +42,22 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.sidebar();
   }
 
+  composeBox() {
+    this.cOpenClose = !this.cOpenClose;
+    this.sidebarService.composeClick(this.cOpenClose);
+  }
+
   clickOnItem(itemNumber) {
     this.clickedItem = itemNumber;
   }
 
   manageLabel() {
-    this.router.navigate(['manage-label'])
+    this.clickedItem = 11;
+    // this.router.navigate(['manage-label'])
   }
 
   createLabel() {
+    this.clickedItem = 13;
     const dialogRef = this.dialog.open(LabelCreateComponent, {
       width: '500px',
     });
@@ -57,11 +67,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
       
     });
   }
-
-  inbox() {
-    this.router.navigate([''])
-  }
-
 
   compnayContact() {
     this.clickedItem = 1
@@ -89,6 +94,71 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   labelShowing() {
     this.lable = !this.lable;
+  }
+
+
+
+  onStarred() {
+    this.clickedItem = 1;
+   this.sidebarService.onStarred();
+  }
+
+  onInbox() {
+    this.clickedItem = 0;
+    this.router.navigate([''])
+    this.sidebarService.onInbox();
+  }
+  
+  onSnoozed() {
+    this.clickedItem = 2;
+    this.sidebarService.onSnoozed();
+  }
+  
+  onSend() {
+    this.clickedItem = 3;
+    this.sidebarService.onSend();
+  }
+  
+  onDraft() {
+    this.clickedItem = 4;
+    this.sidebarService.onDraft();
+  }
+  
+  onTrash() {
+    this.clickedItem = 5;
+    this.sidebarService.onTrash();
+  }
+  
+  onJunk() {
+    this.clickedItem = 6;
+    this.sidebarService.onJunk();
+  }
+  
+  onJunkEmail() {
+    this.clickedItem = 7;
+    this.sidebarService.onJunkEmail();
+  }
+  
+  onUnWanted() {
+    this.clickedItem = 8;
+    this.sidebarService.onUnWanted();
+  }
+
+  onImportant() {
+    this.clickedItem = 9;
+    this.sidebarService.onImportant();
+  }
+
+
+
+  onAllMail() {
+    this.clickedItem = 10;
+    this.sidebarService.onAllMail()
+  }
+
+  onSpam() {
+    this.clickedItem = 11;
+    this.sidebarService.onSpam();
   }
 
   ngOnDestroy() {

@@ -1,0 +1,49 @@
+<div class="compose-link">
+
+    <div class="title-bar">
+        <span class="title-text">Edit Link</span><span [mat-dialog-close] cdkFocusInitial class="close-btn"><i class="material-icons" style="font-size: 20px;">&#xE5CD;</i></span>
+    </div>
+
+    <form [formGroup]="linkForm" class="link-form">
+        <div class="text-display">
+            <label for="i-display">Text to display: </label>
+            <input type="text" id="i-display" formControlName="textDisplay" [value]="linkForm.get('textDisplay').value ?  '' : linkForm.get('linkBox').value"/>
+        </div>
+
+        <span class="link-to">Link to:</span>
+
+        <div class="link-to-box">
+            <div class="link-to-left">
+                <span>
+                    <input type="radio" id="web" name="link" [value]="0" formControlName="link" >
+                    <label for="web" class="link-label" [class.underline]="linkForm.get('link').value == 0">Web address</label><br>
+                </span>
+                
+                <span>
+                    <input type="radio" id="email" name="link" [value]="1" formControlName="link">
+                    <label for="email" [class.underline]="linkForm.get('link').value == 1" class="link-label">Email address</label><br>
+                </span>
+
+            </div>
+            <div class="link-to-right">
+                <small><strong style="color: gray;padding: 2px;"> 
+                    to what URL should this link go?
+                </strong></small>
+
+                <input type="isLink" style="width: 100%; line-height: 22px; height: 22px;" formControlName="linkBox"/>
+                <small class="test-link" *ngIf="linkForm.get('link').value == 0">Test this link</small>
+                <small class="test-details" *ngIf="linkForm.get('link').value == 0">
+                    <strong>Not sure what to put in the box?</strong> First, find the page on the web that you want to link to. (A search engine might be useful.) Then, copy the web address from the box in your browser's address bar, and paste it into the box above.
+                </small>
+            </div>
+
+        </div>
+
+        <div mat-dialog-actions style="display: flex; justify-content: flex-end; position: relative;">
+            <button mat-button (click)="closeDialog()">Cancel</button>
+            <button mat-flat-button (click)="linkSubmit()" type="submit" [mat-dialog-close]="submitedLink" cdkFocusInitial [disabled]="!linkForm.get('linkBox').valid" [class.enable]="linkForm.get('linkBox').valid">&nbsp;OK&nbsp;</button>
+        </div>
+
+    </form>
+
+</div>

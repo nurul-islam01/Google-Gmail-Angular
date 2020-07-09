@@ -1,4 +1,4 @@
-<div class="fab d-flex justify-content-center" (click)="createContactDialog()" [class.fav-active]="activeSidebar">
+<div class="fab d-flex justify-content-center" (click)="composeBox()" [class.fav-active]="activeSidebar">
     <span class="fab-action-button d-flex justify-content-center">
         <svg class="fab-action-button__icon" width="36" height="36" viewBox="0 0 36 36"><path fill="#34A853" d="M16 16v14h4V20z"></path><path fill="#4285F4" d="M30 16H20l-4 4h14z"></path><path fill="#FBBC05" d="M6 16v4h10l4-4z"></path><path fill="#EA4335" d="M20 16V6h-4v14z"></path><path fill="none" d="M0 0h36v36H0z"></path></svg>
     </span>
@@ -11,15 +11,15 @@
     <div class="planner">
 
         <ul>
-            <li><a [class.contact-nav-active]="clickedItem == 0" (click)="inbox()"><i class="material-icons">&#xE156;</i> <span [class.hide]="activeSidebar">Inbox</span> </a></li>
-            <li class=""><a ><i class="material-icons">&#xE838;</i> <span [class.hide]="activeSidebar">Starred</span> <small *ngIf="clickedItem == 1" style="float: right; position: relative; margin-right: 8px; margin-top: 4px; font-weight: 500;">{{ contactsSize ? contactsSize.length : 0}}</small> </a></li>
-            <li class=""><a ><i class="material-icons">&#xE924;</i> <span [class.hide]="activeSidebar">Snoozed</span></a></li>
-            <li class=""><a ><i class="material-icons">&#xE163;</i> <span [class.hide]="activeSidebar">Send</span></a></li>
-            <li class=""><a ><i class="material-icons">&#xE24D;</i> <span [class.hide]="activeSidebar">Drafts</span></a></li>
-            <li class=""><a ><i class="material-icons">&#xE892;</i> <span [class.hide]="activeSidebar">[Imap]/Trash</span></a></li>
-            <li class=""><a ><i class="material-icons">&#xE892;</i> <span [class.hide]="activeSidebar">Junk</span></a></li>
-            <li class=""><a ><i class="material-icons">&#xE892;</i> <span [class.hide]="activeSidebar">Junk E-mail</span></a></li>
-            <li class=""><a ><i class="material-icons">&#xE892;</i> <span [class.hide]="activeSidebar">Unwanted</span></a></li>
+            <li (click)="onInbox()"><a [class.contact-nav-active]="clickedItem == 0" (click)="inbox()"><i class="material-icons">&#xE156;</i> <span [class.hide]="activeSidebar">Inbox</span> </a></li>
+            <li (click)="onStarred()" class=""><a [class.contact-nav-active]="clickedItem == 1"><i class="material-icons">&#xE838;</i> <span [class.hide]="activeSidebar">Starred</span>  </a></li>
+            <li (click)="onSnoozed()" class=""><a [class.contact-nav-active]="clickedItem == 2"><i class="material-icons">&#xE924;</i> <span [class.hide]="activeSidebar">Snoozed</span></a></li>
+            <li (click)="onSend()" class=""><a [class.contact-nav-active]="clickedItem == 3"><i class="material-icons">&#xE163;</i> <span [class.hide]="activeSidebar">Send</span></a></li>
+            <li (click)="onDraft()" class=""><a [class.contact-nav-active]="clickedItem == 4"><i class="material-icons">&#xE24D;</i> <span [class.hide]="activeSidebar">Drafts</span></a></li>
+            <li (click)="onTrash()" class=""><a [class.contact-nav-active]="clickedItem == 5"><i class="material-icons">&#xE892;</i> <span [class.hide]="activeSidebar">[Imap]/Trash</span></a></li>
+            <li (click)="onJunk()" class=""><a [class.contact-nav-active]="clickedItem == 6"><i class="material-icons">&#xE892;</i> <span [class.hide]="activeSidebar">Junk</span></a></li>
+            <li (click)="onJunkEmail()" class=""><a [class.contact-nav-active]="clickedItem == 7"><i class="material-icons">&#xE892;</i> <span [class.hide]="activeSidebar">Junk E-mail</span></a></li>
+            <li (click)="onUnWanted()" class=""><a [class.contact-nav-active]="clickedItem == 8"><i class="material-icons">&#xE892;</i> <span [class.hide]="activeSidebar">Unwanted</span></a></li>
             <!-- <mat-divider></mat-divider> -->
             <li>
                 <a (click)="labelShowing()">
@@ -30,17 +30,18 @@
                 </a>
             </li>
             
-            <ng-container *ngIf="lable">
-                <li>
-                    <a style="display: flex; justify-content: space-between;">
-                        <span>
-                            <i style="position: relative; top: 5px;" class="material-icons">&#xE8E6;</i>
+            <ng-container *ngIf="lable" >
+                <li (click)="onImportant()">
+                    <a style="display: flex; justify-content: space-between;" [class.contact-nav-active]="clickedItem == 9">
+                        <span style="display: flex; height: 100%; align-items: center;">
+                            <!-- <i  class="material-icons">&#xE8E6;</i> -->
+                            <mat-icon style=" margin-left: 24px; margin-right: 15px; color: #202124c2; font-weight: 500;">label_important</mat-icon>
                             <span [class.hide]="activeSidebar">Important</span>
                         </span>
                     </a>
                 </li>
-                <li>
-                    <a style="display: flex; justify-content: space-between;">
+                <li (click)="onAllMail()">
+                    <a style="display: flex; justify-content: space-between;" [class.contact-nav-active]="clickedItem == 10">
                        
                         <span>
                             <i style="position: relative; top: 5px;" class="material-icons">&#xE0BE;</i>
@@ -49,8 +50,8 @@
                     </a>
                 </li>
                 
-                <li>
-                    <a style="display: flex; justify-content: space-between;">
+                <li (click)="onSpam()">
+                    <a style="display: flex; justify-content: space-between;" [class.contact-nav-active]="clickedItem == 11">
                        
                         <span>
                             <i style="position: relative; top: 5px;" class="material-icons">&#xE160;</i>
@@ -59,8 +60,8 @@
                     </a>
                 </li>
                 
-                <li>
-                    <a style="display: flex; justify-content: space-between;">
+                <li (click)="onTrash()">
+                    <a style="display: flex; justify-content: space-between;" [class.contact-nav-active]="clickedItem == 12">
                        
                         <span>
                             <i style="position: relative; top: 5px;" class="material-icons">&#xE872;</i>
@@ -70,7 +71,7 @@
                 </li>
                 
                 <li (click)="manageLabel()">
-                    <a style="display: flex; justify-content: space-between;">
+                    <a style="display: flex; justify-content: space-between;" [class.contact-nav-active]="clickedItem == 12">
                        
                         <span>
                             <i style="position: relative; top: 5px;" class="material-icons">&#xE8B8;</i>
@@ -80,7 +81,7 @@
                 </li>
                 
                 <li (click)="createLabel()">
-                    <a style="display: flex; justify-content: space-between;">
+                    <a style="display: flex; justify-content: space-between;" [class.contact-nav-active]="clickedItem == 13">
                        
                         <span>
                             <i style="position: relative; top: 5px;" class="material-icons">&#xE145;</i>

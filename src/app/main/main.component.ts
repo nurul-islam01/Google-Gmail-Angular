@@ -7,6 +7,7 @@ import { Label } from './../models/label.model';
 import { MainService } from './main.service';
 import { HeaderService } from '../header/header.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SidebarService } from '../sidebar/sidebar.service';
 
 export interface PeriodicElement {
   name: string;
@@ -52,7 +53,23 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent {
+export class MainComponent implements OnInit, OnDestroy {
+
+  isComposeOpen: boolean = false;
+
+  constructor(private sidebarService: SidebarService) {
+    
+  }
+
+  ngOnInit(): void {
+    
+    this.sidebarService.compose.subscribe(result => {
+      this.isComposeOpen = result;
+    });
+  }
+  ngOnDestroy(): void {
+    throw new Error("Method not implemented.");
+  }
 
   displayedColumns: string[] = ['select', 'name'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);

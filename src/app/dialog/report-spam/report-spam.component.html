@@ -1,0 +1,13 @@
+<div class="report-spam">
+
+    <div class="title-bar">
+        <span class="title-text">Report spam & unsubscribe</span><span [mat-dialog-close] cdkFocusInitial class="close-btn"><i class="material-icons" style="font-size: 20px;">&#xE5CD;</i></span>
+    </div>
+    <div style="font-size: 14px; display: flex;">
+        This message will be marked as spam. Would you also like to stop receiving similar messages from BASIS Secretariat?
+    </div>
+    <div style="display: flex; justify-content: flex-end; padding-top: 20px;">
+        <button mat-button style="color: gray;" (click)="onSpamUnsubscripbe()">Report spam & unsubscribe</button>
+        <button mat-flat-button style="color: #fff; background-color: #2475f7; margin-left: 7px;" (click)="onSpam()">Report spam</button>
+    </div>
+</div> 

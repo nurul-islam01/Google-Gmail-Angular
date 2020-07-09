@@ -1,4 +1,4 @@
-<div style="display: flex;">
+<div style="display: flex; flex-direction: column;">
 
   <div class="detail-container">
     <div class="mail-header">
@@ -12,74 +12,128 @@
             <i style="font-size: 20px; color: rgb(87, 83, 83);" class="material-icons">&#xE5D5;</i>
           </span> -->
           
-          <span style="cursor: pointer;" class="mail-header-btn" matTooltip="Archive" >
+          <span style="cursor: pointer;" (click)="onArchive()" class="mail-header-btn" matTooltip="Archive" >
             <i style="font-size: 20px;" class="material-icons">&#xE149;</i>
           </span>
           
-          <span style="cursor: pointer;" class="mail-header-btn" matTooltip="Report spam" >
+          <span style="cursor: pointer;" (click)="onSpam()" class="mail-header-btn" matTooltip="Report spam" >
             <i style="font-size: 20px;" class="material-icons">&#xE160;</i>
           </span>
           
-          <span  style="cursor: pointer;" class="mail-header-btn" matTooltip="Delete" >
+          <span  style="cursor: pointer;" (click)="onDelete()" class="mail-header-btn" matTooltip="Delete" >
             <i style="font-size: 20px;" class="material-icons">&#xE872;</i>
           </span>
           
           <div  style="height: 25px; width: 1px; background-color: rgba(128, 128, 128, 0.233); margin-left: 15px; margin-right: 15px;"></div>
       
-          <span style="cursor: pointer;" class="mail-header-btn" matTooltip="Mark as read" >
-            <i style="font-size: 20px;" class="material-icons">&#xE151;</i>
+          <span style="cursor: pointer;" (click)="onUnread()" class="mail-header-btn" matTooltip="Mark as unread" >
+            <i style="font-size: 20px;" class="material-icons">&#xE0BE;</i>
           </span>
           
-          <span  style="cursor: pointer;" class="mail-header-btn" matTooltip="Snooze" >
+          <span  style="cursor: pointer;" (click)="onSnooze()" class="mail-header-btn" matTooltip="Snooze" >
             <i style="font-size: 20px;" class="material-icons">&#xE924;</i>
           </span>
           
-          <span style="cursor: pointer;" class="mail-header-btn" matTooltip="Add to task" >
+          <span style="cursor: pointer;" (click)="onAddToMask()" class="mail-header-btn" matTooltip="Add to task" >
             <i style="font-size: 20px; " class="material-icons">&#xE03B;</i>
           </span>
       
           <div style="height: 25px; width: 1px; background-color: rgba(128, 128, 128, 0.233); margin-left: 15px; margin-right: 15px;"></div>
           
-          <span  style="cursor: pointer;" class="mail-header-btn" matTooltip="Move to" >
+          <span  style="cursor: pointer;" [matMenuTriggerFor]="htMove" class="mail-header-btn" matTooltip="Move to" >
             <i style="font-size: 20px;" class="material-icons">&#xE41E;</i>
           </span>
+
+          <mat-menu #htMove="matMenu">
+            <span style="display: flex; padding-left: 10px;">Move to :</span>
+    
+            <div style="display: flex; width: 100%; flex-direction: column; " >
+                <form (click)="stopPropagation($event)" [formGroup]="searchForm" class="search-form" id="serachFrom" cdkTrapFocus cdkTrapFocusAutoCapture>
+                    <input [(ngModel)]="label" id="search" formControlName="search"  type="text" name="search" autofocus="true" value=" " />
+                    <label for="search" style=" cursor: pointer;;margin-left: -30px; display: inline-flex; align-items: center; margin-top: 3px;"><i class="material-icons">&#xE8B6;</i></label>
+                </form>
+                
+                <div style="height: 220px; overflow-y: auto;">
+                  <button mat-menu-item *ngFor="let lab of labels | filterlabels:label">{{lab}} </button>
+                </div>
+            </div>
+            
+            <!-- <span><input type="text" matInput /> </span> -->
+            
+            <mat-divider></mat-divider>
+            <button mat-menu-item >Spam </button>
+            <button mat-menu-item >Trash </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="createLabel()">Create new </button>
+            <button mat-menu-item >Manage label </button>
+            
+    
+          </mat-menu>
           
-          <span  style="cursor: pointer;" class="mail-header-btn" matTooltip="Labels" >
+          <span  style="cursor: pointer;" [matMenuTriggerFor]="htLabels" class="mail-header-btn" matTooltip="Labels" >
             <i style="font-size: 20px; " class="material-icons">&#xE892;</i>
           </span>
+
+          <mat-menu #htLabels="matMenu">
+            <span style="display: flex; padding-left: 10px;">Lbel as :</span>
+    
+            <div style="display: flex; width: 100%; flex-direction: column;" >
+                <form (click)="stopPropagation($event)" [formGroup]="searchForm" class="search-form" id="serachFrom" cdkTrapFocus cdkTrapFocusAutoCapture>
+                    <input [(ngModel)]="label" id="search" formControlName="search"  type="text" name="search" autofocus="true" value=" " />
+                    <label for="search" style=" cursor: pointer;;margin-left: -30px; display: inline-flex; align-items: center; margin-top: 3px;"><i class="material-icons">&#xE8B6;</i></label>
+                </form>
+                
+                <mat-selection-list #shoes>
+                    <mat-list-option checkboxPosition="before" *ngFor="let lab of labels | filterlabels:label">
+                      {{lab}}
+                    </mat-list-option>
+                  </mat-selection-list>
+                  
+            </div>
+            
+            <!-- <span><input type="text" matInput /> </span> -->
+            
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="createLabel()">Create new </button>
+            <button mat-menu-item >Manage label </button>
+            
+    
+          </mat-menu>
           
           <span style="cursor: pointer;" class="mail-header-btn" matTooltip="More" [matMenuTriggerFor]="headerMore">
             <i style="font-size: 20px;" class="material-icons">&#xE5D4;</i>
           </span>
           
           <mat-menu #headerMore="matMenu">
-            <button mat-menu-item>Mark as unread</button>
-            <button mat-menu-item>Mark as important</button>
-            <button mat-menu-item>Add star</button>
-            <button mat-menu-item>Creat event</button>
-            <button mat-menu-item>Filter messages like this</button>
-            <button mat-menu-item>Mute</button>
+            <button (click)="onUnread()" mat-menu-item>Mark as unread</button>
+            <button (click)="onImportant(true)" mat-menu-item>Mark as important</button>
+            <button (click)="onImportant(false)" mat-menu-item>Mark as not important</button>
+            <button (click)="onStar(true)" mat-menu-item>Add star</button>
+            <button (click)="onStar(false)" mat-menu-item>Remove star</button>
+            <button (click)="onCreateEvent()" mat-menu-item>Create event</button>
+            <button (click)="onFilterMessageLikeThis()" mat-menu-item>Filter messages like this</button>
+            <button (click)="onMute()" mat-menu-item>Mute</button>
   
           </mat-menu>
         </div>
         <div style="display: flex; align-items: center; flex-wrap: nowrap; overflow: hidden;">
           <small style="margin-right: 20px;">2 of 428 </small>
-          <span style="cursor: pointer;" class="mail-btn" matTooltip="Newer" >
+          <span style="cursor: pointer;" (click)="onNewer()" class="mail-btn" matTooltip="Newer" >
             <i class="material-icons" style="color: gray; padding: 4px; font-size: 20px;">&#xE314;</i>
           </span>
           
-          <span style="cursor: pointer;" class="mail-btn" matTooltip="Older" >
+          <span style="cursor: pointer;" (click)="onOlder()" class="mail-btn" matTooltip="Older" >
             <i class="material-icons" style="color: gray; padding: 4px; font-size: 20px;">&#xE315;</i>
           </span>
   
         </div>
     </div>
   
-    <div class="body-details">
+    <div class="body-details" >
       <div class="mail-title">
         <span class="title">Dipu and Abe want to join your network</span>
         <span style=" display: flex; justify-items: center;">
-          <span style="cursor: pointer;" class="mail-btn" matTooltip="Print all" >
+          <span (click)="onPrint()" style="cursor: pointer;" class="mail-btn" matTooltip="Print all" >
             <i class="material-icons" style="color: gray; padding: 4px; font-size: 20px;">&#xE8AD;</i>
           </span>
           
@@ -96,6 +150,7 @@
           </div>
         </div>
         <div style="display: flex; flex-direction: column; padding-left: 8px;">
+
           <div style="display: flex; justify-content: space-between; margin-top: -2px; margin-bottom: 5px;">
             <div style="display: inline; flex-direction: column;">
               <span style="font-weight: 550; font-size: 14px; color: black;"> {{name}} <small>&#60;nurul.islma3f@gmail.com&#62;</small></span> 
@@ -104,15 +159,15 @@
             </div>
             <div style="display: flex; justify-content: center; justify-items: center; align-items: center;">
               <small style="margin-right: 20px;">8:20 Am (2 hours ago)</small>
-              <span style="cursor: pointer;;" class="mail-btn" matTooltip="not starred" >
+              <span style="cursor: pointer;;" (click)="onStar(false)" class="mail-btn" matTooltip="not starred" >
                 <i class="material-icons" style="color: gray; padding: 4px; font-size: 20px;">&#xE83A;</i>
               </span>
               
-              <span style="cursor: pointer;" class="mail-btn" matTooltip="Starred" >
+              <span style="cursor: pointer;" (click)="onStar(true)" class="mail-btn" matTooltip="Starred" >
                 <i class="material-icons" style="color: gray; padding: 4px;  font-size: 20px;">&#xE838;</i>
               </span>
               
-              <span style="cursor: pointer;" class="mail-btn" matTooltip="Reply" >
+              <span style="cursor: pointer;" (click)="onReply()" class="mail-btn" matTooltip="Reply" >
                 <i class="material-icons" style="color: gray; padding: 4px;  font-size: 20px;">&#xE15E;</i>
               </span>
               
@@ -121,28 +176,308 @@
               </span>
   
               <mat-menu #detailsMore="matMenu">
-                <button mat-menu-item style="display: flex; align-items: center;"><i class="material-icons" style=" margin-right: 5px;">&#xE15E;</i> Replay </button>
-                <button mat-menu-item style="display: flex; align-items: center;"><i class="material-icons" style=" margin-right: 5px;">&#xE154;</i> Forword </button>
+                <button mat-menu-item (click)="onReply()" style="display: flex; align-items: center;"><i class="material-icons" style=" margin-right: 5px;">&#xE15E;</i> Replay </button>
+                <button mat-menu-item (click)="onForward()" style="display: flex; align-items: center;"><i class="material-icons" style=" margin-right: 5px;">&#xE154;</i> Forword </button>
                 <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Filter messages like this</button>
-                <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Print</button>
+                <button mat-menu-item (click)="onPrint()"><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Print</button>
                 <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Delete this message</button>
                 <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Block '{{name}}'</button>
                 <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Report spam</button>
+                <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Report fishing</button>
+                <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Show orginal</button>
+                <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Dwonload message</button>
                 <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Mark as unread</button>
   
               </mat-menu>
               
             </div>
           </div>
-          <div [innerHtml]="mailBodyHtml" class="details"> </div>
+          <div [innerHtml]="mailBody" id="fullMailView" class="details"> </div>
+          
+          <div class="file-viewer">
+            <a class="file-item">
 
-          <div style="display: flex; padding-top: 40px; padding-bottom: 40px;">
-            <button mat-stroked-button><i class="material-icons" style=" font-size: 20px;">&#xE15E;</i> &nbsp;&nbsp;Reply  &nbsp;	&nbsp;	</button>
-            <button mat-stroked-button style="margin-left: 15px;"><i class="material-icons" style=" font-size: 20px;">&#xE154;</i> &nbsp;&nbsp;Forward  &nbsp;	&nbsp;	</button>
+              <div class="m-view">
+                <div class="main-view">
+                  <pdf-viewer class="pdf-viewer" [src]="pdfSrc"
+                    [render-text]="true"
+                    [external-link-target]="'blank'"
+                    [fit-to-page]="true"
+                    [show-all]="true"
+                    style="display: block;">
+                  </pdf-viewer>
+
+                </div>
+                <div class="bottom-view pdf">
+                  <i class="material-icons pdf-icon">&#xE415;</i>
+                  <span class="file-name">Nurul inalfjaljflajflajflajflsjlfjaf </span>
+                </div>
+              </div>
+
+              <div class="h-view pdf">
+                <div class="h-top">
+                  <i class="material-icons pdf-icon">&#xE415;</i>
+                  <span class="file-name">Nurul inalfjaljflajflajflajflsjlfjaf </span>
+                </div>
+                <div class="h-bottom">
+                  <a style="text-decoration: none;" [href]="pdfSrc" download><i class="material-icons hb-icon">&#xE2C4;</i></a>               
+                  <i class="material-icons hb-icon">&#xE161;</i>
+                  <i class="material-icons hb-icon">&#xE3C9;</i>
+                </div>
+              </div>
+
+            </a>
+            
+            <a class="file-item">
+
+              <div class="m-view">
+                <div class="main-view pdf" style="height: 120px;">
+                  <img src="assets/images/myimg.jpeg" height="auto" width="100%"/>
+
+                </div>
+                <!-- <div class="bottom-view ">
+                  <i class="material-icons pdf-icon">&#xE415;</i>
+                  <span class="file-name">Nurul inalfjaljflajflajflajflsjlfjaf </span>
+                </div> -->
+              </div>
+
+              <div class="h-view pdf">
+                <div class="h-top">
+                  <i class="material-icons pdf-icon">&#xE3F4;</i>
+                  <span class="file-name">Nurul inalfjaljflajflajflajflsjlfjaf </span>
+                </div>
+                <div class="h-bottom">
+                  <a style="text-decoration: none;" href="assets/images/myimg.jpeg" download><i class="material-icons hb-icon">&#xE2C4;</i></a>               
+                  <i class="material-icons hb-icon">&#xE161;</i>
+                  <i class="material-icons hb-icon">&#xE3C9;</i>
+                </div>
+              </div>
+
+            </a>
+
+            
+            <a class="file-item">
+              
+              <div class="m-view">
+                <div class="main-view">
+                  
+                  <ngx-doc-viewer [url]="doc" disableContent="all"  viewer="url" viewer="google" style="width:100%;height:90px; overflow: hidden;"></ngx-doc-viewer>
+
+                </div>
+                <div class="bottom-view doc">
+                  <span class="doc-icon">W</span>
+                  <span class="file-name">Nurul inalfjaljflajflajflajflsjlfjaf </span>
+                </div>
+              </div> 
+              
+              <div class="h-view doc">
+                <div class="h-top">
+                  <span class="doc-icon">W</span>
+                  <span class="file-name">Nurul inalfjaljflajflajflajflsjlfjaf </span>
+                </div>
+                <div class="h-bottom">
+                  <a style="text-decoration: none;" [href]="doc" download><i class="material-icons hb-icon">&#xE2C4;</i></a>               
+                  <i class="material-icons hb-icon">&#xE161;</i>
+                  <i class="material-icons hb-icon">&#xE3C9;</i>
+                </div>
+              </div>
+            </a>
+            
+            <a class="file-item">
+              
+              <div class="m-view">
+                <div class="main-view">
+                  
+                  <ngx-doc-viewer [url]="xl" disableContent="all"  viewer="url" viewer="google" style="width:100%;height:90px;"></ngx-doc-viewer>
+
+                </div>
+                <div class="bottom-view xl">
+                  <span class="xl-icon">X</span>
+                  <span class="file-name">Nurul inalfjaljflajflajflajflsjlfjaf </span>
+                </div>
+              </div> 
+              
+              <div class="h-view xl">
+                <div class="h-top">
+                  <span class="xl-icon">X</span>
+                  <span class="file-name">Nurul inalfjaljflajflajflajflsjlfjaf </span>
+                </div>
+                <div class="h-bottom">
+                  <a style="text-decoration: none;" [href]="xl" download><i class="material-icons hb-icon">&#xE2C4;</i></a>               
+                  <i class="material-icons hb-icon">&#xE161;</i>
+                  <i class="material-icons hb-icon">&#xE3C9;</i>
+                </div>
+              </div>
+            </a>
+            
+            <a class="file-item">
+              
+              <div class="m-view">
+                <div class="main-view" style="display: flex; justify-content: center;">
+                  <img src="assets/images/zip_big_icon.png" height="100%" width="auto" style="padding: auto;"/>
+                </div>
+                <div class="bottom-view zip">
+                  <img class="zip-icon" src="assets/images/zip_small_icon.png"/>
+                  <span class="file-name">Nurul inalfjaljflajflajflajflsjlfjaf </span>
+                </div>
+              </div> 
+              
+              <div class="h-view zip">
+                <div class="h-top">
+                  <img class="zip-icon" src="assets/images/zip_small_icon.png"/>
+                  <span class="file-name">Nurul inalfjaljflajflajflajflsjlfjaf </span>
+                </div>
+                <div class="h-bottom">
+                  <a style="text-decoration: none;" [href]="xl" download><i class="material-icons hb-icon">&#xE2C4;</i></a>               
+                  <i class="material-icons hb-icon">&#xE161;</i>
+                  <i class="material-icons hb-icon">&#xE3C9;</i>
+                </div>
+              </div>
+            </a>
+            
+
+
           </div>
+
+          <div style="display: flex; padding-top: 40px; padding-bottom: 40px;" *ngIf="!isReplyShow">
+            <button mat-stroked-button (click)="onReply()"><i class="material-icons" style=" font-size: 20px;">&#xE15E;</i> &nbsp;&nbsp;Reply  &nbsp;	&nbsp;	</button>
+            <button mat-stroked-button (click)="onForward()" style="margin-left: 15px;"><i class="material-icons" style=" font-size: 20px;">&#xE154;</i> &nbsp;&nbsp;Forward  &nbsp;	&nbsp;	</button>
+          </div>
+
         </div>
   
       </div>
+  
+  
+  <div class="reply-box" [class.display-none]="!isReplyShow">
+    
+    <div class="left-bar">
+      <div class="mail-profile">
+        <i style="color: #cccccc;" class="material-icons">&#xE7FD;</i>
+      </div>
     </div>
+
+    <div class="reply-body">
+      <form [formGroup]="replyFrom" style="width: 100%;">
+
+
+      <div class="reply-header">
+        <div class="left">
+          <span class="reply-btns" [matMenuTriggerFor]="replyHeader">
+            <i style="font-size: 20px;" class="material-icons">&#xE15E;</i>
+            <i style="font-size: 20px;" class="material-icons">&#xE5C5;</i>
+          </span>
+
+          <mat-menu #replyHeader="matMenu">
+            <button (click)="onReply()" mat-menu-item style="display: flex; align-items: center;"><i class="material-icons" style=" margin-right: 5px;">&#xE15E;</i> Replay to {{name}}</button>
+            <button (click)="onForward()" mat-menu-item style="display: flex; align-items: center;"><i class="material-icons" style=" margin-right: 5px;">&#xE154;</i> Forword </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Edit subject</button>
+            <button mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Pop out reply</button>
+
+          </mat-menu>
+
+
+          <small (click)="clipShow()" *ngIf="!isClipShow" style="color: gray; margin-top: 5px;">linkedin (invitations@linkedin.com)</small>
+          
+          <div style="display: flex; width: 100%; margin-top: 5px;" *ngIf="isClipShow">
+            <span style="font-size: 13px; color: rgb(83, 81, 81); margin-right: 5px;">To</span>
+
+            <mat-form-field class="email-chip-list" appearance="none">
+              <mat-chip-list #chipList aria-label="Fruit selection">
+                <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" class="mail-clip"
+                         [removable]="removable" (removed)="remove(fruit)">
+                  {{fruit.email}}
+                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  formControlName="replyTo"
+                  [matChipInputFor]="chipList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addOnBlur"
+                  (matChipInputTokenEnd)="add($event)">
+              </mat-chip-list>
+            </mat-form-field>
+  
+
+          </div>
+        </div>
+        <div class="right">
+          <i style="font-size: 16px;" class="material-icons">&#xE89E;</i>
+        </div>
+
+      </div>
+      <div class="reply-editor">
+
+        <quill-editor class="quill-editor" [styles]="editorStyle" [(ngModel)]="editorContent" placeholder="" [modules]="config"
+            formControlName="replyEditor" required>
+        </quill-editor>
+
+      </div>
+      <div class="compose-footer">
+    
+        <div class="footer-btns">
+            <div class="footer-left">
+                <button type="submit" mat-button class="btn btn-primary" style="background-color: #1a73e8; color: white;" (click)="onSend()">&nbsp; Send &nbsp;</button>
+                
+                <span class="f-btn" (click)="formatingText()" matTooltip="Formating options">
+                    <i class="material-icons">&#xE165;</i>
+                </span>
+                
+                <span class="f-btn" matTooltip="Attach file" (click)="file.click()">
+                    <i class="material-icons">&#xE226;</i>
+                </span>
+                
+                <input type="file" style="display: none;" #file multiple formControlName="file" (change)="uploadFileToServer($event)"/>
+
+                <span class="f-btn" #link (click)="composeLink()" matTooltip="insert link">
+                    <i class="material-icons">&#xE157;</i>
+                </span>
+                
+                <span class="f-btn" matTooltip="insert emoji">
+                    <i class="material-icons">&#xE420;</i>
+                </span>
+                
+                <span class="f-btn" matTooltip="insert photo" (click)="image.click()">
+                    <i style="font-size: 18px;" class="material-icons">&#xE251;</i>
+                </span>
+
+                <input type="file" accept="image/*" style="display: none;" multiple (change)="onFileChange($event)" #image formControlName="image" />
+                
+                <span [matMenuTriggerFor]="signature" class="f-btn"  matTooltip="insert signature">
+                    <i style="font-size: 18px;" class="material-icons">&#xE22B;</i>
+                </span>
+
+                <input type="file" accept=".html" style="display: none;" #upSignature formControlName="signature" (change)="uploadSignature($event)"/>
+
+                <mat-menu #signature="matMenu" yPosition="above">
+                  <button (click)="upSignature.click()" mat-menu-item><i class="material-icons" style="color: gray; margin-right: 5px; visibility: hidden;">&#xE154;</i> Upload signature</button>
+
+                  <button mat-menu-item style="display: flex; align-items: center;"><i class="material-icons" style=" margin-right: 5px;">&#xE876;</i> {{signature ? 'Has signature' : 'No signature'}} </button>
+                  
+    
+                </mat-menu>
+                
+            </div>
+            <div class="footer-right">
+                <span class="fr-btn" matTooltip="More options"  >
+                    <i style="font-size: 18px;" class="material-icons">&#xE5D4;</i>
+                </span>
+
+                <span class="fr-btn" matTooltip="Discard draft" (click)="discardDraft()">
+                    <i style="font-size: 18px;" class="material-icons">&#xE872;</i>
+                </span>
+                
+            </div>
+        </div>
+      </div>
+
+
+      </form>
+    </div>
+
+  </div>
+
+</div>
   
 

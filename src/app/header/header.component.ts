@@ -41,7 +41,6 @@ export class HeaderComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-  
     this.headerService.searchData(filterValue.trim().toLowerCase());    
   }
 

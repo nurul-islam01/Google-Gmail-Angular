@@ -29,9 +29,11 @@ import {
   MatProgressSpinnerModule,
   MatProgressBarModule,
   MatSnackBarModule,
-  MatTooltipModule} from '@angular/material';
-import { from } from 'rxjs';
 
+  MatTooltipModule,
+  MatNativeDateModule} from '@angular/material';
+import { from } from 'rxjs';
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [],
@@ -67,6 +69,8 @@ import { from } from 'rxjs';
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatTooltipModule,
+    HttpClientModule, 
+    MatNativeDateModule
   ],
   exports: [
     MatDividerModule,
@@ -100,7 +104,8 @@ import { from } from 'rxjs';
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatTooltipModule,
-    
+    HttpClientModule,
+    MatNativeDateModule
   ]
 
 })
